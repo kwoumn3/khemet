@@ -14,7 +14,7 @@ module.exports = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignSelf: 'stretch',
-    paddingTop: Platform.OS === 'android' ? 7 : 0,
+    paddingTop: Platform.OS === 'android' ? 5 : 0,
   },
   btnHeader: {
     paddingTop: 10,
