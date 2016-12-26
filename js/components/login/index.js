@@ -73,7 +73,7 @@ class Login extends Component {
                 textStyle={Platform.OS === 'android' ? { marginTop: -5, fontSize: 16 } : { fontSize: 16, marginTop: -5, fontWeight: '900' }}
                 onPress={() => this.replaceRoute('home', { username: this.state.username, password: this.state.password })}
               >
-                  Get Started
+                  Login
               </Button>
 
               <View style={styles.otherLinksContainer}>
