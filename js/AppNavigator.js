@@ -9,6 +9,7 @@ import { closeDrawer } from './actions/drawer';
 
 import Login from './components/login/';
 import Home from './components/home/';
+import SignUp from './components/sign-up';
 import BlankPage from './components/blankPage/';
 import SplashPage from './components/splashscreen/';
 import SideBar from './components/sideBar';
@@ -78,6 +79,8 @@ class AppNavigator extends Component {
         return <SplashPage />;
       case 'login':
         return <Login />;
+      case 'signup':
+        return <SignUp />;
       case 'home':
         return <Home />;
       case 'blankPage':

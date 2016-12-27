@@ -79,7 +79,9 @@ class Login extends Component {
               <View style={styles.otherLinksContainer}>
                 <Grid>
                   <Col>
-                    <Button transparent style={{ alignSelf: 'flex-start' }}>
+                    <Button transparent style={{ alignSelf: 'flex-start' }}
+                    onPress={() => this.replaceRoute('signup')}
+                    >
                       <Text style={styles.helpBtns}>
                           Create Account
                       </Text>
