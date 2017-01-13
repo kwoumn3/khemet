@@ -13,6 +13,7 @@ import SignUp from './components/sign-up';
 import BlankPage from './components/blankPage/';
 import SplashPage from './components/splashscreen/';
 import SideBar from './components/sideBar';
+import OrganizationPicker from './components/organizationpicker';
 import { statusBarColor } from './themes/base-theme';
 
 const {
@@ -85,6 +86,8 @@ class AppNavigator extends Component {
         return <Home />;
       case 'blankPage':
         return <BlankPage />;
+      case 'orgPage':
+        return <OrganizationPicker />;
       default :
         return <Login />;
     }
