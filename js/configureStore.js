@@ -18,5 +18,9 @@ export default function configureStore(onCompletion:()=>void):any {
   const store = createStore(reducer, enhancer);
   persistStore(store, { storage: AsyncStorage }, onCompletion);
 
+  let unsubscribe = store.subscribe(() =>
+    console.log(store.getState())
+  )
+
   return store;
 }
