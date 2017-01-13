@@ -51,7 +51,6 @@ class SignUp extends Component {
     }
 
     signupOnClick(email, password) {
-      console.log(this.state.firstname);
       this.props.reset(this.props.navigation.key);
       this.props.addFirstName(this.state.firstname);
       this.props.addLastName(this.state.lastname);
