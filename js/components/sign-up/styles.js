@@ -20,7 +20,7 @@ module.exports = StyleSheet.create({
         fontSize: 22,
         padding: 10,
         fontWeight: 'bold',
-        marginTop: Platform.OS === 'android' ? (deviceHeight / 6) : ((deviceHeight / 6) + 10)
+        marginTop: Platform.OS === 'android' ? (deviceHeight / 30) : ((deviceHeight / 30) + 10)
     },
     background: {
         flex: 1,
