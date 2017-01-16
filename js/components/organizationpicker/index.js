@@ -11,7 +11,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 
 import theme from '../login/login-theme';
 import styles from './styles';
-{/*import styles from './styles';*/}
+import {addOrganization} from '../../actions/user';
 
 const alphaShield = require('../../../images/aphiashield.png');
 const akaShield = require('../../../images/akashield.png');
@@ -48,147 +48,127 @@ class OrganizationPicker extends Component {
     this.onPressZeta = this.onPressZeta.bind(this);
     this.onPressSGRho = this.onPressSGRho.bind(this);
     this.onPressIota = this.onPressIota.bind(this);
+    this.dispatchOrg = this.dispatchOrg.bind(this);
   }
 
   replaceRoute(route) {
     this.props.replaceAt('organizationpicker', { key: route }, this.props.navigation.key);
   }
 
+  dispatchOrg(organization) {
+    this.props.addOrganization(organization);
+  }
+
   render () {
     return (
       <View>
-      <Text style={styles.signupHeader}>
-        Select an Organization
-      </Text>
-      <Grid>
-        <Col>
-          <Row>
-            <TouchableHighlight underlayColor="gray" onPress={this.onPressAlpha}>
-              <Image source={alphaShield} style={styles.img}/>
-            </TouchableHighlight>
-          </Row>
-          <Row>
-            <TouchableHighlight underlayColor="gray" onPress={this.onPressOmega}>
-              <Image source={omegaShield} style={styles.img}/>
-            </TouchableHighlight>
-          </Row>
-          <Row>
-            <TouchableHighlight underlayColor="gray" onPress={this.onPressZeta}>
-              <Image source={zetaShield} style={styles.img}/>
-            </TouchableHighlight>
-          </Row>
-        </Col>
-        <Col>
-          <Row>
-            <TouchableHighlight underlayColor="gray" onPress={this.onPressAKA}>
-              <Image source={akaShield} style={styles.img}/>
-            </TouchableHighlight>
-          </Row>
-          <Row>
-            <TouchableHighlight underlayColor="gray" onPress={this.onPressDelta}>
-              <Image source={deltaShield} style={styles.img}/>
-            </TouchableHighlight>
-          </Row>
-          <Row>
-            <TouchableHighlight underlayColor="gray" onPress={this.onPressSGRho}>
-              <Image source={sgrhoShield} style={styles.img}/>
-            </TouchableHighlight>
-          </Row>
-        </Col>
-        <Col>
-          <Row>
-            <TouchableHighlight underlayColor="gray" onPress={this.onPressKappa}>
-              <Image source={kappaShield} style={styles.img}/>
-            </TouchableHighlight>
-          </Row>
-          <Row>
-            <TouchableHighlight underlayColor="gray" onPress={this.onPressSigma}>
-              <Image source={sigmaShield} style={styles.img}/>
-            </TouchableHighlight>
-          </Row>
-          <Row>
-            <TouchableHighlight underlayColor="gray" onPress={this.onPressIota}>
-              <Image source={iotaShield} style={styles.img}/>
-            </TouchableHighlight>
-          </Row>
-        </Col>
-      </Grid>
+        <Text style={styles.signupHeader}>
+          Select an Organization
+        </Text>
+        <Grid>
+          <Col>
+            <Row>
+              <TouchableHighlight underlayColor="gray" onPress={this.onPressAlpha}>
+                <Image source={alphaShield} style={styles.img}/>
+              </TouchableHighlight>
+            </Row>
+            <Row>
+              <TouchableHighlight underlayColor="gray" onPress={this.onPressOmega}>
+                <Image source={omegaShield} style={styles.img}/>
+              </TouchableHighlight>
+            </Row>
+            <Row>
+              <TouchableHighlight underlayColor="gray" onPress={this.onPressZeta}>
+                <Image source={zetaShield} style={styles.img}/>
+              </TouchableHighlight>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <TouchableHighlight underlayColor="gray" onPress={this.onPressAKA}>
+                <Image source={akaShield} style={styles.img}/>
+              </TouchableHighlight>
+            </Row>
+            <Row>
+              <TouchableHighlight underlayColor="gray" onPress={this.onPressDelta}>
+                <Image source={deltaShield} style={styles.img}/>
+              </TouchableHighlight>
+            </Row>
+            <Row>
+              <TouchableHighlight underlayColor="gray" onPress={this.onPressSGRho}>
+                <Image source={sgrhoShield} style={styles.img}/>
+              </TouchableHighlight>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <TouchableHighlight underlayColor="gray" onPress={this.onPressKappa}>
+                <Image source={kappaShield} style={styles.img}/>
+              </TouchableHighlight>
+            </Row>
+            <Row>
+              <TouchableHighlight underlayColor="gray" onPress={this.onPressSigma}>
+                <Image source={sigmaShield} style={styles.img}/>
+              </TouchableHighlight>
+            </Row>
+            <Row>
+              <TouchableHighlight underlayColor="gray" onPress={this.onPressIota}>
+                <Image source={iotaShield} style={styles.img}/>
+              </TouchableHighlight>
+            </Row>
+          </Col>
+        </Grid>
       </View>
     )
   }
 
   onPressAlpha() {
-    this.setState({
-      organization: "Alpha Phi Alpha"
-    });
-    console.log(this.state.organization);
+    this.dispatchOrg("Alpha Phi Alpha")
   }
 
   onPressAKA() {
-    this.setState({
-      organization: "Alpha Kappa Alpha"
-    });
-    console.log(this.state.organization);
+    this.dispatchOrg("Alpha Kappa Alpha")
   }
 
   onPressKappa() {
-    this.setState({
-      organization: "Kappa Alpha Psi"
-    });
-    console.log(this.state.organization);
+    this.dispatchOrg("Kappa Alpha Psi")
   }
 
   onPressOmega() {
-    this.setState({
-      organization: "Omega Psi Phi"
-    });
-    console.log(this.state.organization);
+    this.dispatchOrg("Omega Psi Phi")
   }
 
   onPressDelta() {
-    this.setState({
-      organization: "Delta Sigma Theta"
-    });
-    console.log(this.state.organization);
+    this.dispatchOrg("Delta Sigma Theta")
   }
 
   onPressSigma() {
-    this.setState({
-      organization: "Phi Beta Sigma"
-    });
-    console.log(this.state.organization);
+    this.dispatchOrg("Phi Beta Sigma")
   }
 
   onPressZeta() {
-    this.setState({
-      organization: "Zeta Phi Beta"
-    });
-    console.log(this.state.organization);
+    this.dispatchOrg("Zeta Phi Beta")
   }
 
   onPressSGRho() {
-    this.setState({
-      organization: "Sigma Gamma Rho"
-    });
-    console.log(this.state.organization);
+    this.dispatchOrg("Sigma Gamma Rho")
   }
 
   onPressIota() {
-    this.setState({
-      organization: "Iota Phi Theta"
-    });
-    console.log(this.state.organization);
+    this.dispatchOrg("Iota Phi Theta")
   }
 }
 
 function bindActions(dispatch) {
   return {
     replaceAt: (routeKey, route, key) => dispatch(replaceAt(routeKey, route, key)),
+    addOrganization: (organization) => dispatch(addOrganization(organization))
   };
 }
 
 const mapStateToProps = state => ({
   navigation: state.cardNavigation,
+  credentials: state.credentials
 });
 
 export default connect(mapStateToProps, bindActions)(OrganizationPicker);

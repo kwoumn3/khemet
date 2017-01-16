@@ -2,7 +2,7 @@ const React = require('react-native');
 
 const { StyleSheet, Dimensions, Platform } = React;
 
-// const primary = require('../../themes/variable').brandPrimary;
+const primary = require('../../themes/variable').brandPrimary;
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
