@@ -52,7 +52,7 @@ class OrganizationPicker extends Component {
   }
 
   replaceRoute(route) {
-    this.props.replaceAt('organizationpicker', { key: route }, this.props.navigation.key);
+    this.props.replaceAt('orgPage', { key: route }, this.props.navigation.key);
   }
 
   dispatchOrg(organization) {
