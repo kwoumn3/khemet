@@ -134,9 +134,9 @@ const renderConfirmPassword = ({input: {onBlur, onChange}, meta: {touched, error
 
 class SignUp extends Component {
 
-
     static propTypes = {
       reset: React.PropTypes.func,
+      pushRoute: React.PropTypes.func,
       navigation: React.PropTypes.shape({
         key: React.PropTypes.string,
       }),
@@ -144,22 +144,9 @@ class SignUp extends Component {
 
     constructor(props) {
       super(props);
-      this.state = {
-          offset: {
-            email: '',
-            password: '',
-            firstname: '',
-            lastname: '',
-            confirmPassword: '',
-              x:0,
-              y:0
-          }
-      };
-
       this.constructor.childContextTypes = {
           theme: React.PropTypes.object,
       }
-
     }
 
     resetRoute(route) {
@@ -208,7 +195,6 @@ class SignUp extends Component {
           </Container>
       )
     }
-
 }
 
 
