@@ -13,6 +13,9 @@ import SignUp from './components/sign-up';
 import BlankPage from './components/blankPage/';
 import SplashPage from './components/splashscreen/';
 import SideBar from './components/sideBar';
+import Profile from './components/profile';
+import Timeline from './components/timeline';
+import Comments from './components/comments';
 import OrganizationPicker from './components/organizationpicker';
 import { statusBarColor } from './themes/base-theme';
 
@@ -88,6 +91,12 @@ class AppNavigator extends Component {
         return <BlankPage />;
       case 'orgPage':
         return <OrganizationPicker />;
+      case 'timeline':
+        return <Timeline />;
+      case 'comments':
+        return <Comments />;
+      case 'profile':
+        return <Profile />;
       default :
         return <Login />;
     }

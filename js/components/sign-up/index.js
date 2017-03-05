@@ -50,13 +50,13 @@ class SignUp extends Component {
       this.props.resetRoute(route);
     }
 
-    signupOnClick(email, password) {
+    signupOnClick(email, password, firstname,lastname) {
       this.props.reset(this.props.navigation.key);
       this.props.addFirstName(this.state.firstname);
       this.props.addLastName(this.state.lastname);
       this.props.addEmailAddress(this.state.email);
       this.props.addPassword(this.state.password);
-      ApiRequest.signup(email, password);
+      ApiRequest.signup(email, password, firstname, lastname);
     }
 
     render() {
@@ -111,7 +111,7 @@ class SignUp extends Component {
                                         rounded transparent  block
                                         onPress={ () =>
                                           {
-                                            this.signupOnClick(this.state.email, this.state.password);
+                                            this.signupOnClick(this.state.email, this.state.password, this.state.firstname, this.state.lastname);
                                           }
                                         }
                                         style={styles.signupBtn}

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { actions } from 'react-native-navigation-redux-helpers';
 import { Container, Content, Text, InputGroup, Input, Button, Icon, View } from 'native-base';
 import { Grid, Col } from 'react-native-easy-grid';
+import ApiRequest from '../../api/ApiRequest.js';
 
 import login from './login-theme';
 import styles from './styles';
@@ -30,15 +31,35 @@ class Login extends Component {
     this.state = {
       username: '',
       password: '',
+      signedUsers: []
     };
+
+    this.usersRef = ApiRequest.getRef().child('users');
+
     this.constructor.childContextTypes = {
       theme: React.PropTypes.object,
     };
   }
 
+
+  componentDidMount() {
+    //this.listenForUsers(this.usersListRef);
+  }
+
+  //test method that grabs first user's firstname
+
   replaceRoute(route) {
+    /*this.usersRef.push({
+      firstname: "Gabriel",
+      lastname: "Galarza",
+      email: "gabrgalarza@gmail.com",
+      password: "password1",
+      organization: "Phi Beta Sigma"
+    });*/
     this.props.replaceAt('login', { key: route }, this.props.navigation.key);
   }
+
+
 
   render() {
     return (
@@ -71,7 +92,7 @@ class Login extends Component {
                 rounded primary block large
                 style={styles.loginBtn}
                 textStyle={Platform.OS === 'android' ? { marginTop: -5, fontSize: 16 } : { fontSize: 16, marginTop: -5, fontWeight: '900' }}
-                onPress={() => this.replaceRoute('home', { username: this.state.username, password: this.state.password })}
+                onPress={() => this.replaceRoute('comments', { username: this.state.username, password: this.state.password })}
               >
                   Login
               </Button>
@@ -106,6 +127,10 @@ class Login extends Component {
   }
 }
 
+function getFirstFirstName() {
+  //return this.state.signedUsers[0].firstname;
+  return "hi";
+}
 
 function bindActions(dispatch) {
   return {
