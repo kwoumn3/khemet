@@ -6,6 +6,7 @@ import { actions } from 'react-native-navigation-redux-helpers';
 import { Container, Content, Text, InputGroup, Input, Button, Icon, View } from 'native-base';
 import { Grid, Col } from 'react-native-easy-grid';
 import ApiRequest from '../../api/ApiRequest.js';
+import * as firebase from 'firebase';
 
 import login from './login-theme';
 import styles from './styles';
@@ -33,12 +34,38 @@ class Login extends Component {
       password: '',
       signedUsers: []
     };
-
+    this.loginUser = this.loginUser.bind(this);
+    this.ref = ApiRequest.getRef();
     this.usersRef = ApiRequest.getRef().child('users');
 
     this.constructor.childContextTypes = {
       theme: React.PropTypes.object,
     };
+  }
+
+  loginUser() {
+    console.log("here");
+    // try {
+    //   ApiRequest.loginUser(this.state.username, this.state.password);
+    //   this.replaceRoute('comments', { username: this.state.username, password: this.state.password });
+    // } catch(error) {
+    //   console.log("We don't go to the next page");
+    // }
+
+    ApiRequest.loginUser(this.state.username, this.state.password)
+      .then(() => {
+        this.replaceRoute('comments', { username: this.state.username,
+                                      password: this.state.password,
+                                       });
+      })
+      .catch((error) => {
+        console.log("caught");
+        alert('Please enter valid email address/password');
+        //console.error(error);
+      });
+
+
+
   }
 
 
@@ -48,14 +75,14 @@ class Login extends Component {
 
   //test method that grabs first user's firstname
 
-  replaceRoute(route) {
-    /*this.usersRef.push({
-      firstname: "Gabriel",
-      lastname: "Galarza",
-      email: "gabrgalarza@gmail.com",
-      password: "password1",
-      organization: "Phi Beta Sigma"
-    });*/
+   replaceRoute(route) {
+  //   this.usersRef.push({
+  //     firstname: "Kyle",
+  //     lastname: "Woumn",
+  //     email: "kwoumn@gmail.com",
+  //     password: "password1",
+  //     organization: "Phi Beta Sigma"
+  //   });
     this.props.replaceAt('login', { key: route }, this.props.navigation.key);
   }
 
@@ -92,7 +119,7 @@ class Login extends Component {
                 rounded primary block large
                 style={styles.loginBtn}
                 textStyle={Platform.OS === 'android' ? { marginTop: -5, fontSize: 16 } : { fontSize: 16, marginTop: -5, fontWeight: '900' }}
-                onPress={() => this.replaceRoute('comments', { username: this.state.username, password: this.state.password })}
+                onPress={() => this.loginUser()}
               >
                   Login
               </Button>

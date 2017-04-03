@@ -75,20 +75,45 @@ module.exports = StyleSheet.create({
         marginTop: Platform.OS === 'android' ? 2 : 1
     },
     date: {
-        textAlign: 'right',
+        textAlign: 'left',
         fontWeight: '300',
         fontSize: 12,
         color: '#666',
         lineHeight: 16,
         marginLeft: Platform.OS === 'android' ? 10 : 0,
+        paddingRight: 18,
+        paddingBottom: 5,
+        marginRight: 0,
         // marginTop: Platform.OS === 'android' ? 5 : -5
+    },
+    likeCount: {
+      textAlign: 'right',
+      fontWeight: '300',
+      fontSize: 12,
+      color: '#666',
+      lineHeight: 16,
+      paddingBottom: 7,
+      paddingLeft: 75,
+      marginLeft: Platform.OS === 'android' ? 10 : -20,
+      marginRight: 10,
     },
     likeIcon: {
         fontSize: 16,
         marginRight: (deviceWidth < 330) ? -75 : -110,
-        marginLeft: 20,
-        marginTop: Platform.OS === 'android' ? 0 : 1
+        marginLeft: -30,
+        paddingLeft: 30,
+        paddingBottom: 5,
+        marginTop: Platform.OS === 'android' ? 0 : 1,
+
     },
+    trashIcon: {
+      paddingRight: 20,
+      marginBottom: 10,
+      marginLeft: (deviceWidth < 330) ? 20 : 30,
+      marginRight: (deviceWidth < 330) ? (Platform.OS === 'android' ? -8 : -8) : (Platform.OS === 'android' ? -20 : -20),
+      marginTop: Platform.OS === 'android' ? 2 : 1
+    }
+    ,
     commentBox: {
         backgroundColor: '#EEE',
         flexDirection: 'row',

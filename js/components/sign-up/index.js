@@ -57,6 +57,13 @@ class SignUp extends Component {
       this.props.addEmailAddress(this.state.email);
       this.props.addPassword(this.state.password);
       ApiRequest.signup(email, password, firstname, lastname);
+      var checkit = ApiRequest.getCurrentUser();
+      if (checkit) {
+        console.log("PASS REGISTRATION, THIS IS CURRENT USER: " + ApiRequest.getCurrentUser().email);
+      } else {
+        console.log("No user");
+      }
+
     }
 
     render() {

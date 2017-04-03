@@ -8,7 +8,7 @@ import { actions } from 'react-native-navigation-redux-helpers';
 
 import { Container, Content, Text, Button, Icon, InputGroup, Input, View } from 'native-base';
 import { Col, Row, Grid } from "react-native-easy-grid";
-
+import ApiRequest from '../../api/ApiRequest.js';
 import theme from '../login/login-theme';
 import styles from './styles';
 import {addOrganization} from '../../actions/user';
@@ -49,6 +49,8 @@ class OrganizationPicker extends Component {
     this.onPressSGRho = this.onPressSGRho.bind(this);
     this.onPressIota = this.onPressIota.bind(this);
     this.dispatchOrg = this.dispatchOrg.bind(this);
+
+
   }
 
   replaceRoute(route) {
@@ -56,6 +58,8 @@ class OrganizationPicker extends Component {
   }
 
   dispatchOrg(organization) {
+    
+    ApiRequest.setOrg(organization);
     this.props.addOrganization(organization);
   }
 

@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { Image, View, TouchableOpacity, Platform } from 'react-native';
 import { connect } from 'react-redux';
-
+import * as firebase from 'firebase';
 import { actions } from 'react-native-navigation-redux-helpers';
 
 import { Container, Header, Content, Text, Input, Button, Icon, Card, CardItem, Thumbnail,Tabs } from 'native-base';
@@ -56,19 +56,80 @@ class Comments extends Component {
           };
 
           //this.clearText = this.clearText.bind(this);
+          var firebase = ApiRequest.getBase();
           var firebaseRef = ApiRequest.getRef();
+
+          /*var useruser = firebase.auth().currentUser;
+          if (useruser != null) {
+            userUid = useruser.uid;
+          }*/
+          this.userRef = firebaseRef.child('users/'+firebase.auth().currentUser.uid);
+          console.log("NOQWSY "+this.userRef);
+
+          this.userRef.on('value', (snap) => {
+
+
+            this.theUser = snap.val().firstname;
+            console.log("WELI EBAB"+this.theUser);
+          });
+
+
+          //this.userRef =  firebaseRef.child('users/');
+          // console.log("wahtyah "+userRef);
+          //var theFirstname = "..";
+
+          // firebase.auth().onAuthStateChanged((firebaseUser) => {
+          //   if (firebaseUser) {
+          //     //console.log("lemmeseethat");
+          //     userUid = firebaseUser.uid;
+          //     //console.log("THISTHEID  "+userUid);
+          //     this.userRef =  firebaseRef.child('users/'+userUid);
+          //     //console.log("the ref: "+ userRef);
+          //     this.userRef.on("value", function(snap) {
+          //       useruser = snap.val().firstname;
+          //     }, function(err) {
+          //       console.log(err);
+          //     });
+          //
+          //   } else {
+          //     console.log("no user");
+          //   }
+          //   //console.log("HEREWEGO "+ this.userRef);
+          //   console.log("user " + useruser );
+          // })
+
+          //console.log("try user again "+ useruser.userUid);
+          //console.log("HEREWEGO2 "+ this.state.username);
+
+          //console.log("before await");
+          // var userUid = ApiRequest.getUid()
+          // .then((id) => {
+          //   console.log("doublecheck");
+          //   console.log(id);
+          //   this.userRef = firebaseRef.child('users/'+userUid);
+          // })
+          // .catch(() => {
+          //   console.log("No logged in user");
+          // });
+
+          //this.userRef = firebaseRef.child('users/'+userUid);
+          //this.userRef = firebaseRef.child('users/');
+          // this.userRef.on('value', (snap) => {
+          //
+          //
+          //   this.theUser = snap.val().firstname;
+          //   console.log(this.theUser);
+          // });
           //this.usersListRef = ApiRequest.getRef().child('users');
 
           this.postRef = firebaseRef.child('posts');
+
+
 
         this.constructor.childContextTypes = {
             theme: React.PropTypes.object,
         }
     }
-
-
-
-
 
 
     listenForUsers(itemsRef) {
@@ -88,6 +149,22 @@ class Comments extends Component {
     }
 
     componentDidMount() {
+      //this.userRef
+      this.userRef.on('value', (snap) => {
+
+        // this.setState({
+        //   username: snap.val().firstname
+        // })
+        // console.log("hopefullyausername: "+this.state.username);
+        //this.userRef = firebaseRef.child('users/'+);
+      });
+
+      /*this.userRef.on('value', (dataSnapshot) => {
+        this.setState({
+          username: dataSnapshot.val()
+        })
+      });*/
+      //console.log("EHAT IS THE USERNAME " + this.state.username);
       //updates when child is added
       this.postRef.on('child_added', (dataSnapshot) => {
         this.setState({
@@ -115,7 +192,8 @@ class Comments extends Component {
       if (this.state.newPost != '') {
 
         this.postRef.push({
-          post: this.state.newPost
+          post: this.state.newPost,
+          user: this.theUser
         })
         /*WE SHOULD ADD TO STATIC/DYNAMIC CARD LIST HERE*/
         this.setState({
@@ -130,22 +208,17 @@ class Comments extends Component {
       console.log("isinarrayAfterset: " +this.state.postList);
     }
 
-      /*popRoute() {
-
-        this.props.popRoute(this.props.navigation.key);
-      }*/
+    /*deleteFromFeed(toDelete) {
+      this.postRef.child(toDelete.id).remove();
+    }*/
 
       replaceRoute(route) {
         this.props.replaceAt('comments', { key: route }, this.props.navigation.key);
       }
 
-    /*  pushRoute(route) {
-        this.props.replaceAt('comments', { key: route}, this.props.navigation.key);
-      }
-*/
     render() {
 
-      //console.log("herererer " + this.state.postList.length);
+      console.log("SAY IT   " + this.theUser);
         return (
             <Container theme={theme}>
 
@@ -182,8 +255,9 @@ class Comments extends Component {
                     <View style={styles.commentHeadbg}>
 
                         <Tabs tabTextColor='black'>
-                            <TabOne post = {this.state.postList} isPushed = {this.state.isPostPushed} tabLabel='Top' />
-                            <TabOne post = {this.state.postList} isPushed = {this.state.isPostPushed} tabLabel='Recent' />
+                            <TabOne post = {this.state.postList} isPushed = {this.state.isPostPushed}
+                              postRef = {this.postRef} theUser = {this.theUser} tabLabel='The Yard' />
+                            
                         </Tabs>
                     </View>
 
