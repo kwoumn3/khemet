@@ -15,7 +15,7 @@ const {
 } = actions;
 
 const signUp = require('../../../images/BG-signUp.png');
-const headerLogo = require('../../../images/Header-Logo.png');
+const headerLogo = require('../../../images/logo3.png');
 
 class Home extends Component {  // eslint-disable-line
 

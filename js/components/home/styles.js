@@ -39,7 +39,7 @@ module.exports = StyleSheet.create({
   },
   imageHeader: {
     height: 25,
-    width: 95,
+    width: 25,
     resizeMode: 'contain',
     marginTop: 5,
   },

@@ -218,21 +218,18 @@ class Comments extends Component {
 
     render() {
 
-      console.log("SAY IT   " + this.theUser);
         return (
             <Container theme={theme}>
 
                     <Header style={styles.headerFull}>
                         <Grid style={styles.headerContainer} >
                             <Col style={styles.headerBtns} >
-                                <Button transparent onPress={() => this.replaceRoute('profile')}>
+                                <Button transparent>
                                     <Icon1 name='user' style={styles.headerIcons} />
                                 </Button>
                             </Col>
                             <Col style={styles.headerBtns}>
-                                <Button transparent>
-                                    <Icon name='ios-chatboxes-outline' style={styles.headerIcons} />
-                                </Button>
+
                             </Col>
                             <Col style={styles.headerBtns}>
                                 <TouchableOpacity>
@@ -240,14 +237,10 @@ class Comments extends Component {
                                 </TouchableOpacity>
                             </Col>
                             <Col style={styles.headerBtns} >
-                                <Button transparent>
-                                    <Icon name='ios-bookmarks-outline'  style={styles.headerIcons} />
-                                </Button>
+
                             </Col>
                             <Col style={styles.headerBtns}>
-                                <Button transparent>
-                                    <Icon name='ios-download-outline' style={styles.headerIcons} />
-                                </Button>
+
                             </Col>
                         </Grid>
                     </Header>
@@ -257,7 +250,7 @@ class Comments extends Component {
                         <Tabs tabTextColor='black'>
                             <TabOne post = {this.state.postList} isPushed = {this.state.isPostPushed}
                               postRef = {this.postRef} theUser = {this.theUser} tabLabel='The Yard' />
-                            
+
                         </Tabs>
                     </View>
 

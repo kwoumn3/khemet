@@ -16,7 +16,7 @@ const {
 } = actions;
 
 const bg = require('../../../images/BG.png');
-const logo = require('../../../images/logo.png');
+const logo = require('../../../images/Khemet-Logo.png');
 
 class Login extends Component {
 
@@ -76,13 +76,7 @@ class Login extends Component {
   //test method that grabs first user's firstname
 
    replaceRoute(route) {
-  //   this.usersRef.push({
-  //     firstname: "Kyle",
-  //     lastname: "Woumn",
-  //     email: "kwoumn@gmail.com",
-  //     password: "password1",
-  //     organization: "Phi Beta Sigma"
-  //   });
+
     this.props.replaceAt('login', { key: route }, this.props.navigation.key);
   }
 
@@ -90,9 +84,9 @@ class Login extends Component {
 
   render() {
     return (
-      <Container>
+      <Container style={{backgroundColor: '#88c1ae'}}>
         <Content theme={login}>
-          <Image source={bg} style={styles.background} >
+
             <Image source={logo} style={Platform.OS === 'android' ? styles.aShadow : styles.iosShadow} />
 
             <View style={styles.bg}>
@@ -146,7 +140,7 @@ class Login extends Component {
               </View>
             </View>
 
-          </Image>
+
 
         </Content>
       </Container>

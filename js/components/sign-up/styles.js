@@ -31,7 +31,7 @@ module.exports = StyleSheet.create({
     inputGrp: {
         flexDirection: 'row',
         borderRadius: 25,
-        backgroundColor: 'rgba(255,255,255,0.2)',
+        backgroundColor: 'rgba(106,106,106,0.3)',
         marginBottom: 20,
         borderWidth: 0,
         paddingLeft: 15
@@ -42,8 +42,7 @@ module.exports = StyleSheet.create({
     signupBtn: {
         height: 50,
         marginTop: 20,
-        borderWidth: 1,
-        borderColor: '#ddd'
+        backgroundColor: 'rgba(106,106,106,1)',
     },
     termsText: {
         alignSelf: 'center',

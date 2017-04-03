@@ -12,9 +12,9 @@ const deviceWidth = Dimensions.get('window').width;
 module.exports = StyleSheet.create({
   iosShadow: {
     flex: 1,
-    width: (deviceHeight < 500) ? 80 : (deviceWidth / 4) + 12,
+    width: (deviceHeight < 500) ? 80 : (deviceWidth / 2) + 12,
     resizeMode: 'contain',
-    height: (deviceHeight < 500) ? 50 : (deviceHeight / 15),
+    height: (deviceHeight < 500) ? 80 : (deviceHeight / 10),
     alignSelf: 'center',
     marginTop: (deviceWidth < 330) ? (deviceHeight / 15) : (deviceHeight / 6),
   },
@@ -29,7 +29,7 @@ module.exports = StyleSheet.create({
   inputGrp: {
     flexDirection: 'row',
     borderRadius: 25,
-    backgroundColor: 'rgba(255,255,255,0.3)',
+    backgroundColor: 'rgba(106,106,106,0.3)',
     marginBottom: 20,
   },
   input: {
@@ -51,11 +51,13 @@ module.exports = StyleSheet.create({
   loginBtn: {
     marginTop: 10,
     height: 50,
+    backgroundColor: 'rgba(106,106,106,1)',
   },
   helpBtns: {
     opacity: 0.9,
     fontSize: 14,
     fontWeight: 'bold',
+    color: 'rgba(255,255,255,1)',
   },
   otherLinksContainer: {
     flexDirection: 'row',

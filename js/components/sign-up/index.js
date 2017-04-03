@@ -68,9 +68,9 @@ class SignUp extends Component {
 
     render() {
         return (
-            <Container>
+            <Container style={{backgroundColor: '#88c1ae'}}>
                     <View theme={theme}>
-                        <Image source={require('../../../images/BG-signUp.png')} style={styles.background} >
+
                             <Content padder scrollEnabled={false}>
                                 <Text style={styles.signupHeader}>
                                     CREATE ACCOUNT
@@ -131,7 +131,7 @@ class SignUp extends Component {
                                     </TouchableOpacity>
                                 </View>
                             </Content>
-                        </Image>
+                      
                     </View>
             </Container>
         )

@@ -23,6 +23,10 @@ const zetaShield = require('../../../images/zphibshield.png');
 const sgrhoShield = require('../../../images/sgrhoshield.png');
 const iotaShield = require('../../../images/iotashield.png');
 
+const {
+  replaceAt,
+} = actions;
+
 class OrganizationPicker extends Component {
   static propTypes = {
     replaceAt: React.PropTypes.func,
@@ -54,13 +58,14 @@ class OrganizationPicker extends Component {
   }
 
   replaceRoute(route) {
-    this.props.replaceAt('organizationpicker', { key: route }, this.props.navigation.key);
+    this.props.replaceAt('orgPage', { key: route }, this.props.navigation.key);
   }
 
   dispatchOrg(organization) {
-    
+
     ApiRequest.setOrg(organization);
     this.props.addOrganization(organization);
+    this.replaceRoute('comments');
   }
 
   render () {
