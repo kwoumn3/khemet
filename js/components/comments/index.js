@@ -240,7 +240,9 @@ class Comments extends Component {
 
                             </Col>
                             <Col style={styles.headerBtns}>
-
+                            <Button transparent>
+                                <Icon1 name='sign-out' style={styles.headerIcons} />
+                            </Button>
                             </Col>
                         </Grid>
                     </Header>
