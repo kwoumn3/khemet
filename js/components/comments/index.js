@@ -224,7 +224,7 @@ class Comments extends Component {
                     <Header style={styles.headerFull}>
                         <Grid style={styles.headerContainer} >
                             <Col style={styles.headerBtns} >
-                                <Button transparent>
+                                <Button transparent onPress={() => this.replaceRoute('profile')}>
                                     <Icon1 name='user' style={styles.headerIcons} />
                                 </Button>
                             </Col>

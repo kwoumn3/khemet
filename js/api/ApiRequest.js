@@ -52,8 +52,8 @@ class ApiRequest extends Component {
 
     user.updateProfile({
 
-      displayName: "BillyB",
-      photoURL: "https://example.com/jane-q-user/profile.jpg"
+      //displayName: "BillyB",
+      //photoURL: "https://example.com/jane-q-user/profile.jpg"
     }).then(function() {
       console.log("Update Successful");
 
