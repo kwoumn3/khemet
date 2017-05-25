@@ -101,21 +101,25 @@ class TabOne extends Component {
           //console.log(a, this.state.postList[a].text.post);
           //this.deleteFromFeed(a); <Button transparent onPress={()=> this.deleteFromFeed.bind(this, p)}>
         }
+
         posts.reverse();
+        //console.log(posts);
         if (posts != []) {
         return (
             <Container style={{backgroundColor: '#e0e0e0'}}>
             <Content theme={theme} style={{marginBottom:(Platform.OS === 'ios') ? -50 : -10}}>
             <View style={{backgroundColor: '#e0e0e0'}}>
-             {posts.map(function (p) {
-               return (
-                  <Card foregroundColor='#222' style={{ flex: 0 }} key={p.id}>
+             {posts.map((p) => (
+                  <Card foregroundColor='#222' style={{ flex: 0 }} key={p.value+p.id}>
                       <CardItem   header>
                           <Text style={styles.cmtName}>{p.user}</Text>
                           <Text style={styles.date}>11:00 AM</Text>
                           <Icon name='ios-heart-outline' style={styles.likeIcon} />
                           <Text style={styles.likeCount}>12</Text>
-                          <Icon1 name='trash'  style={styles.trashIcon} />
+                          <TouchableOpacity
+                            onPress={()=>this.deleteFromFeed(p)} >
+                            <Icon1 name='trash'  style={styles.trashIcon} />
+                          </TouchableOpacity>
                       </CardItem>
 
                       <CardItem style={styles.cardItem} key={p} content>
@@ -127,10 +131,10 @@ class TabOne extends Component {
 
                   </Card>
 
-                );
+                )
 
 
-             })}
+             )}
 
 
            </View>

@@ -41,6 +41,20 @@ class Login extends Component {
     this.constructor.childContextTypes = {
       theme: React.PropTypes.object,
     };
+
+    //check if user is logged in. if yes, log out, if not then proceed
+    this.currUser = firebase.auth().currentUser;
+    if (this.currUser) {
+      firebase.auth().signOut().then(function() {
+        console.log("Signed Out");
+        console.log("who is logged in now  "+ firebase.auth().currentUser.uid)
+      }).catch(function(error) {
+        console.log("Didn't Log Out.");
+        console.log("Error:   "+error);
+      });
+    } else {
+      console.log("Nobody is logged in");
+    }
   }
 
   loginUser() {
@@ -70,6 +84,7 @@ class Login extends Component {
 
 
   componentDidMount() {
+
     //this.listenForUsers(this.usersListRef);
   }
 

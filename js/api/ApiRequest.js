@@ -35,6 +35,7 @@ class ApiRequest extends Component {
 
   async loginUser(email, pass) {
 
+
     await firebase.auth().signInWithEmailAndPassword(email, pass)
       .then(() => {
         console.log("Successful login");
@@ -91,29 +92,14 @@ class ApiRequest extends Component {
             firstname: first,
             lastname: last,
             organization: "",
-            password: pass
+            password: pass,
+            photoUrl: "",
+            photoImgBase64: ""
           });
         } else {
           console.log("No user is logged in");
         }
       })
-      //also how to set data in database
-      /*database.ref('users/' + 'doodoo').set({
-          email: email,
-          firstname: first,
-          lastname: last
-      });*/
-      //how to set data in database
-
-
-      //attempt to retrieve list of users
-      //var allUsersRef = firebase.database().ref('users/');
-
-      /*allUsersRef.on('value', function(snapshot) {
-        var allUsers = snapshot.val();
-        console.log("here is snapshot!!" + "\n" + snapshot.val());
-      })*/
-
 
         //get children as array
 

@@ -10,9 +10,12 @@ import { closeDrawer } from './actions/drawer';
 import Login from './components/login/';
 import Home from './components/home/';
 import SignUp from './components/sign-up';
+import Widgets from './components/widgets';
 import BlankPage from './components/blankPage/';
 import SplashPage from './components/splashscreen/';
 import SideBar from './components/sideBar';
+import Calendar from './components/calendar';
+import Settings from './components/settings'
 import Profile from './components/profile';
 import Timeline from './components/timeline';
 import Comments from './components/comments';
@@ -93,10 +96,16 @@ class AppNavigator extends Component {
         return <OrganizationPicker />;
       case 'timeline':
         return <Timeline />;
+      case 'calendar':
+        return <Calendar />;
       case 'comments':
         return <Comments />;
       case 'profile':
         return <Profile />;
+      case 'settings':
+        return <Settings />;
+      case 'widgets':
+        return <Widgets />;
       default :
         return <Login />;
     }

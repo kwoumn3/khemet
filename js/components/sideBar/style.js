@@ -29,7 +29,7 @@ module.exports = StyleSheet.create({
     flex: 1,
     width: null,
     height: null,
-    backgroundColor: primary,
+    backgroundColor: '#89c2af',
   },
   drawerContent: {
     paddingTop: Platform.OS === 'android' ? 20 : 30,

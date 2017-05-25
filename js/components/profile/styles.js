@@ -15,19 +15,22 @@ module.exports = StyleSheet.create({
         height: null
     },
     profileInfoContainer: {
-        backgroundColor: primary,
+        backgroundColor: "#FFFFFF",
         paddingTop: 10
     },
     profileUser: {
         alignSelf: 'center',
         fontSize: 22,
         fontWeight: 'bold',
-        paddingBottom:5
+        paddingBottom:0,
+        marginTop:20,
+        color: "#434343"
     },
     profileUserInfo: {
         alignSelf: 'center',
         opacity: 0.8,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: "#808080"
     },
     profilePic: {
         width: 80,
@@ -41,6 +44,25 @@ module.exports = StyleSheet.create({
     },
     linkTabs: {
         backgroundColor: '#fff'
+    },
+    headerFull: {
+      backgroundColor: '#89c2af',
+      paddingTop: 10,
+      paddingRight: 20,
+      paddingLeft: 20
+    },
+    headerContainer: {
+      marginTop: (Platform.OS === 'android') ? -10 : undefined,
+      marginLeft: (Platform.OS === 'android') ? -5 : undefined
+    },
+    headerBtns : {
+        padding: 10,
+        alignSelf: 'center'
+    },
+    headerIcons : {
+        fontSize: 30,
+        color: '#FFFFFF',
+        paddingTop: (Platform.OS === 'android') ? 10 : undefined
     },
     linkTabs_header: {
         padding: 15,

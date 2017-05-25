@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Image } from 'react-native';
 import { Container, Content, Text, Icon, List, ListItem } from 'native-base';
-
+import Icon1 from 'react-native-vector-icons/FontAwesome';
 import navigateTo from '../../actions/sideBarNav';
 import styles from './style';
 
@@ -22,12 +22,12 @@ class SideBar extends Component {
   render() {
     return (
       <Container>
-        <Image source={singUp} style={styles.background} >
+        <Image style={styles.background} >
           <Content style={styles.drawerContent}>
             <List foregroundColor={'white'} >
               <ListItem
                 button iconLeft
-                onPress={() => this.navigateTo('home')}
+                onPress={() => this.navigateTo('comments')}
                 style={styles.links}
               >
                 <Icon name="ios-grid-outline" />
@@ -36,11 +36,47 @@ class SideBar extends Component {
 
               <ListItem
                 button iconLeft
-                onPress={() => this.navigateTo('blankPage')}
+                onPress={() => this.navigateTo('settings')}
                 style={styles.links}
               >
                 <Icon name="ios-keypad-outline" />
-                <Text style={styles.linkText}>BLANK PAGE</Text>
+                <Text style={styles.linkText}>SETTINGS</Text>
+              </ListItem>
+
+              <ListItem
+                button iconLeft
+                onPress={() => this.navigateTo('calendar')}
+                style={styles.links}
+              >
+                <Icon name="ios-keypad-outline" />
+                <Text style={styles.linkText}>CALENDAR</Text>
+              </ListItem>
+
+              <ListItem
+                button iconLeft
+                onPress={() => this.navigateTo('widgets')}
+                style={styles.links}
+              >
+                <Icon name="ios-keypad-outline" />
+                <Text style={styles.linkText}>VENDORS</Text>
+              </ListItem>
+
+              <ListItem
+                button iconLeft
+                onPress={() => this.navigateTo('profile')}
+                style={styles.links}
+              >
+                <Icon name="ios-keypad-outline" />
+                <Text style={styles.linkText}>PROFILE</Text>
+              </ListItem>
+
+              <ListItem
+                button iconLeft
+                onPress={() => this.navigateTo('login')}
+                style={styles.links}
+              >
+                <Icon name="ios-keypad-outline" />
+                <Text style={styles.linkText}>SIGN OUT</Text>
               </ListItem>
             </List>
           </Content>
