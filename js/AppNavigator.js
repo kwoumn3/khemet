@@ -17,6 +17,7 @@ import SideBar from './components/sideBar';
 import Calendar from './components/calendar';
 import Settings from './components/settings'
 import Profile from './components/profile';
+import UserList from './components/userlist';
 import Timeline from './components/timeline';
 import Comments from './components/comments';
 import OrganizationPicker from './components/organizationpicker';
@@ -102,6 +103,8 @@ class AppNavigator extends Component {
         return <Comments />;
       case 'profile':
         return <Profile />;
+      case 'userlist':
+        return <UserList/>;
       case 'settings':
         return <Settings />;
       case 'widgets':

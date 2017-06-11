@@ -58,28 +58,8 @@ class TabOne extends Component {
             }),
           }
 
-          sayhello(p) {
-            console.log("hello!!!!!!!!!");
-          }
-
-          /*componentDidMount() {
-            //updates when child is added
-            this.postRef.on('child_added', (dataSnapshot) => {
-              this.setState({
-                postList: this.state.postList.concat({id: dataSnapshot.key, text: dataSnapshot.val()})
-              })
-            });
-            //updates when child is removed
-            this.postRef.on('child_removed', (dataSnapshot) => {
-              this.setState({
-                postList: this.state.postList.filter((x) => x.id != dataSnapshot.key)
-              })
-            });
-
-          }*/
 
           deleteFromFeed(p) {
-            console.log("AAAAAAAAAAAAAAAAA!");
             this.props.postRef.child(p.id).remove();
           }
 
@@ -97,9 +77,8 @@ class TabOne extends Component {
         var posts =[]
         for (var a in this.props.post) {
           posts.push({id: this.props.post[a].id, post: this.props.post[a].text.post
-                                                ,user: this.props.post[a].text.user});
-          //console.log(a, this.state.postList[a].text.post);
-          //this.deleteFromFeed(a); <Button transparent onPress={()=> this.deleteFromFeed.bind(this, p)}>
+                      ,user: this.props.post[a].text.user, avatar: this.props.avatar});
+          console.log("avatar:  "+this.props.avatar);
         }
 
         posts.reverse();
@@ -110,23 +89,27 @@ class TabOne extends Component {
             <Content theme={theme} style={{marginBottom:(Platform.OS === 'ios') ? -50 : -10}}>
             <View style={{backgroundColor: '#e0e0e0'}}>
              {posts.map((p) => (
-                  <Card foregroundColor='#222' style={{ flex: 0 }} key={p.value+p.id}>
-                      <CardItem   header>
+                  <Card style={{marginBottom:5}} foregroundColor='#222' key={p.value+p.id}>
+                      <CardItem style={styles.cardHeader}>
+                          { p.avatar === '' ? <Thumbnail source={require('../../../images/contacts/nopic.png')} style={styles.profilePic} /> :
+                            <Thumbnail source={{uri: p.avatar}} style={styles.profilePic} />
+                          }
                           <Text style={styles.cmtName}>{p.user}</Text>
                           <Text style={styles.date}>11:00 AM</Text>
-                          <Icon name='ios-heart-outline' style={styles.likeIcon} />
-                          <Text style={styles.likeCount}>12</Text>
+
                           <TouchableOpacity
                             onPress={()=>this.deleteFromFeed(p)} >
                             <Icon1 name='trash'  style={styles.trashIcon} />
                           </TouchableOpacity>
                       </CardItem>
-
-                      <CardItem style={styles.cardItem} key={p} content>
-                          <Text >
+                      <CardItem style={styles.cardItem} key={p.id} cardBody>
+                          <Text style={styles.postFont}>
                             {p.post}
                           </Text>
-
+                      </CardItem>
+                      <CardItem style={{height:30,padding:0, paddingLeft:15, paddingRight:15, borderBottomWidth: 0}}>
+                          <Icon name='ios-heart-outline' style={styles.likeIconBot} />
+                          <Text style={styles.likeCountBot}>12</Text>
                       </CardItem>
 
                   </Card>

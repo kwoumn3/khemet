@@ -57,15 +57,26 @@ module.exports = StyleSheet.create({
         borderWidth: 3
     },
     cardHeader: {
-        backgroundColor: 'transparent',
+        backgroundColor: 'white',
         borderBottomWidth: 0,
-        paddingBottom: 10,
-        height: 65
+        height: 30,
+        padding:0,
+        paddingRight:15,
+        paddingLeft:15,
+        flexDirection:'row',
+        alignItems:'center',
     },
     cardItem: {
         backgroundColor: 'transparent',
-        paddingTop: 5,
-        paddingLeft: 50
+        padding: 0,
+        paddingLeft:15,
+        paddingRight:15,
+        borderBottomWidth: 0,
+        height:80,
+    },
+    postFont: {
+      fontSize:13,
+      marginTop:5,
     },
     timeIcon: {
         fontSize: 16,
@@ -75,15 +86,14 @@ module.exports = StyleSheet.create({
         marginTop: Platform.OS === 'android' ? 2 : 1
     },
     date: {
-        textAlign: 'left',
+        textAlign: 'center',
         fontWeight: '300',
         fontSize: 12,
         color: '#666',
         lineHeight: 16,
         marginLeft: Platform.OS === 'android' ? 10 : 0,
-        paddingRight: 18,
-        paddingBottom: 5,
         marginRight: 0,
+        flex:1,
         // marginTop: Platform.OS === 'android' ? 5 : -5
     },
     likeCount: {
@@ -96,8 +106,18 @@ module.exports = StyleSheet.create({
       paddingLeft: 75,
       marginLeft: Platform.OS === 'android' ? 10 : -20,
       marginRight: 10,
+    },likeCountBot: {
+      fontWeight: '300',
+      fontSize: 12,
+      color: '#666',
     },
-    likeIcon: {
+    likeIconBot: {
+        fontSize: 16,
+        lineHeight:20,
+        alignSelf:'center',
+        flex: 0,
+    },
+    likeIconTop: {
         fontSize: 16,
         marginRight: (deviceWidth < 330) ? -75 : -110,
         marginLeft: -30,
@@ -107,11 +127,8 @@ module.exports = StyleSheet.create({
 
     },
     trashIcon: {
-      paddingRight: 20,
-      marginBottom: 10,
-      marginLeft: (deviceWidth < 330) ? 20 : 30,
-      marginRight: (deviceWidth < 330) ? (Platform.OS === 'android' ? -8 : -8) : (Platform.OS === 'android' ? -20 : -20),
-      marginTop: Platform.OS === 'android' ? 2 : 1
+      flex:0,
+
     }
     ,
     commentBox: {
@@ -140,6 +157,8 @@ module.exports = StyleSheet.create({
         paddingTop: 5
     },
     cmtName: {
-      fontSize: (deviceWidth < 330) ? 15 : 17
+      fontSize: (deviceWidth < 330) ? 15 : 17,
+      fontWeight:'bold',
+      flex:1,
     }
 });

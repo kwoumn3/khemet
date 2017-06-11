@@ -1,5 +1,6 @@
 import * as firebase from 'firebase';
 import React, { Component } from 'react';
+import Geocoder from 'react-native-geocoder';
 
 var database;
 var usersList = [];
@@ -19,10 +20,14 @@ class ApiRequest extends Component {
       super(props);
       //this.itemsRef = firebaseApp.database().ref();
 
-      /*myFirebaseRef.set({
-        title: "Hello World!",
-        author: "Simon"
-      });*/
+      this.state = {
+        initialPosition: 'unknown',
+        lastPosition: 'unknown',
+        lat: 'unknown',
+        lng: 'unknown',
+        locality: ''
+      };
+
 
       // Get a reference to the database service
       this.database = firebase.database();
@@ -50,8 +55,9 @@ class ApiRequest extends Component {
       })
 
     var user = firebase.auth().currentUser;
+    console.log("New logged in user uid: " + user.uid);
 
-    user.updateProfile({
+    /*user.updateProfile({
 
       //displayName: "BillyB",
       //photoURL: "https://example.com/jane-q-user/profile.jpg"
@@ -61,69 +67,78 @@ class ApiRequest extends Component {
       }
     , function(error) {
       console.log("Whoops");
-    });
-
-  /*if (user != null) {
-    user.providerData.forEach(function (profile) {
-      console.log("Sign-in provider: "+profile.providerId);
-      console.log("  Provider-specific UID: "+profile.uid);
-      console.log("  Display Name: "+profile.displayName);
-      console.log("  First name Last name: "+profile.firstname+" "+profile.lastname);
-      console.log("  Email: "+profile.email);
-      console.log("  Org: "+profile.organization);
-      console.log("  Photo URL: "+profile.photoURL);
-      console.log("  Password: "+profile.password);
-    });
-  }*/
-      //return true;
+    });*/
   }
 
   async signup(email, pass, first, last) {
-    try {
-      await firebase.auth().createUserWithEmailAndPassword(email, pass);
-      console.log("Account Created");
-      this.loginUser(email, pass);
+      try {
 
-      firebase.auth().onAuthStateChanged(firebaseUser => {
-        if (firebaseUser) {
-          console.log(firebaseUser);
-          this.database.ref().child("users").child(firebaseUser.uid).set({
-            email: email,
-            firstname: first,
-            lastname: last,
-            organization: "",
-            password: pass,
-            photoUrl: "",
-            photoImgBase64: ""
-          });
-        } else {
-          console.log("No user is logged in");
-        }
-      })
+        await firebase.auth().createUserWithEmailAndPassword(email, pass);
+        console.log("Account Created");
+        this.loginUser(email, pass);
 
-        //get children as array
+        //ADD BELOW TO GETLOCATION FUNCTION
+        navigator.geolocation.getCurrentPosition(
+        (position) => {
+          var initialPosition = JSON.stringify(position);
+          this.setState({initialPosition});
+          var lat = position.coords.latitude;
+          var lng = position.coords.longitude;
+          console.log("lat: "  + lat);
+          console.log("lng: "  + lng);
+          var userCoordinates = {
+            lat: lat,
+            lng: lng
+          };
+          Geocoder.geocodePosition(userCoordinates).then(res => {
+            this.setState({locality: res[0].locality});
+            console.log("user address: " + res[0].locality);
+          })
+          .catch(err => console.log(err))
+        },
+        (error) => alert(JSON.stringify(error)),
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      );
+      //eND GETLOCATION BUTTON
 
-        //console.log(usersList);
-    } catch(error) {
-      console.log(error.toString());
-    }
+        var uid = firebase.auth().currentUser.uid;
+        firebase.database().ref('users/' + uid).set({
+          email: email,
+          firstname: first,
+          lastname: last,
+          organization: "",
+          password: pass,
+          chapter: "",
+          crossYear: "",
+          displayName: first + " " + last,
+          occupation: "",
+          school: "",
+          posts: [],
+          friends: [],
+          profilePic: "",
+          location: this.state.locality,
+          likedPosts: [],
+          isPrivate: false,
+          eventCalendar: [],
+          photoUrl: "",
+          photoImgBase64: ""
+        });
+
+      } catch(error) {
+        console.log("Did not successfully sign up: " + error.toString());
+      }
   }
 
   async setOrg(org) {
     try {
-      firebase.auth().onAuthStateChanged(firebaseUser => {
-        if (firebaseUser) {
-          console.log("Adding org to user profile");
-          this.database.ref().child("users").child(firebaseUser.uid).update({
-            organization: org
-          });
-        } else {
-          console.log("No user is logged in");
-        }
+
+      var uid = firebase.auth().currentUser.uid;
+      firebase.database().ref('users/' + uid).update({
+        organization: org
       });
 
     } catch (error) {
-      console.log(error.toString());
+      console.log("Could not add org: " + error.toString());
     }
 
   }
@@ -172,9 +187,18 @@ class ApiRequest extends Component {
 
 
 
-  /*componentDidMount() {
-    this.listenForItems(this.itemsRef);
-  }*/
+  componentDidMount() {
+
+
+  }
+
+  componentWillUnmount() {
+    //navigator.geolocation.clearWatch(this.watchID);
+  }
+
+
 }
+
+
 
 export default new ApiRequest();

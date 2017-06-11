@@ -44,10 +44,11 @@ class Login extends Component {
 
     //check if user is logged in. if yes, log out, if not then proceed
     this.currUser = firebase.auth().currentUser;
+    console.log();
     if (this.currUser) {
       firebase.auth().signOut().then(function() {
         console.log("Signed Out");
-        console.log("who is logged in now  "+ firebase.auth().currentUser.uid)
+        console.log("who is logged in now  "+ firebase.auth().currentUser)
       }).catch(function(error) {
         console.log("Didn't Log Out.");
         console.log("Error:   "+error);
@@ -58,13 +59,19 @@ class Login extends Component {
   }
 
   loginUser() {
-    console.log("here");
-    // try {
-    //   ApiRequest.loginUser(this.state.username, this.state.password);
-    //   this.replaceRoute('comments', { username: this.state.username, password: this.state.password });
-    // } catch(error) {
-    //   console.log("We don't go to the next page");
-    // }
+
+    if (this.currUser) {
+      firebase.auth().signOut().then(function() {
+        console.log("Signed Out");
+
+        console.log("No User should be logged in: "+ firebase.auth().currentUser);
+      }).catch(function(error) {
+        console.log("Didn't Log Out.");
+        console.log("Error:   "+error);
+      });
+    } else {
+      console.log("2nd/Nobody is logged in");
+    }
 
     ApiRequest.loginUser(this.state.username, this.state.password)
       .then(() => {
@@ -73,9 +80,8 @@ class Login extends Component {
                                        });
       })
       .catch((error) => {
-        console.log("caught");
+        console.log("Email/password is invalid: " + error);
         alert('Please enter valid email address/password');
-        //console.error(error);
       });
 
 
@@ -108,7 +114,7 @@ class Login extends Component {
               <InputGroup borderType="rounded" style={[styles.inputGrp, { borderWidth: 0, paddingLeft: 15 }]}>
                 <Icon name="ios-person-outline" />
                 <Input
-                  placeholder="Username"
+                  placeholder="Email"
                   onChangeText={username => this.setState({ username })}
                   style={styles.input}
                 />
@@ -163,10 +169,6 @@ class Login extends Component {
   }
 }
 
-function getFirstFirstName() {
-  //return this.state.signedUsers[0].firstname;
-  return "hi";
-}
 
 function bindActions(dispatch) {
   return {

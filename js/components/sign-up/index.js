@@ -169,10 +169,11 @@ class SignUp extends Component {
         this.props.addLastName(values.lastName);
         this.props.addEmailAddress(values.emailAddress);
         this.props.addPassword(values.password);
+        console.log("INTO API SIGNUP");/////////
         ApiRequest.signup(values.emailAddress, values.password, values.firstName, values.lastName);
         var checkit = ApiRequest.getCurrentUser();
         if (checkit) {
-          console.log("PASS REGISTRATION, THIS IS CURRENT USER: " + ApiRequest.getCurrentUser().email);
+          console.log("PASS REGISTRATION, THIS IS CURRENT USER: " + ApiRequest.getCurrentUser().uid);
         } else {
           console.log("No user");
         }

@@ -62,13 +62,30 @@ class Comments extends Component {
           var firebaseRef = ApiRequest.getRef();
 
           //takes user uid reference from firebase
+          firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+              console.log("User uid should show the last logged in user: " + user.uid);
+              console.log("Current user uid should be the same "+firebase.auth().currentUser.uid);
+              //this.userRef = firebaseRef.child('users/'+user.uid);
+            } else {
+              console.log("No user is actually signed in");
+            }
+          });
           this.userRef = firebaseRef.child('users/'+firebase.auth().currentUser.uid);
 
-          //sets this.theUser to first name of current user
+          //sets this.theUserFirstName to first name of current user
           this.userRef.on('value', (snap) => {
-            this.theUser = snap.val().firstname;
-            console.log("here we are "+this.theUser);
+            this.theUserFirstName = snap.val().firstname;
+            console.log("here we are "+this.theUserFirstName);
+            this.imgbase = snap.val().photoImgBase64;
           });
+
+
+          var storage = firebase.storage();
+          this.pathReference = storage.ref('profilePics/'+firebase.auth().currentUser.uid);
+
+          this.loadProfilePic();
+
 
           //sets this.postRef to reference for posts in firebase
           this.postRef = firebaseRef.child('posts');
@@ -79,11 +96,17 @@ class Comments extends Component {
         }
     }
 
+    async loadProfilePic() {
+       this.pathReference.getDownloadURL().then(url => {
+           console.log("what is url: "+ url);
+           this.setState({ avatarSource: url })
+       }).catch(function(error) {
+         console.log(error+":  No Profile Pic Exists");
+       });
+     }
+
     componentDidMount() {
       //this.userRef
-      this.userRef.on('value', (snap) => {
-
-      });
 
 
 
@@ -127,6 +150,8 @@ class Comments extends Component {
     signOutUser() {
       firebase.auth().signOut().then(function() {
         this.replaceRoute('login');
+      }).catch(function(e) {
+        console.log("User could not sign out (error): " + e);
       })
     }
 
@@ -137,7 +162,7 @@ class Comments extends Component {
 
         this.postRef.push({
           post: this.state.newPost,
-          user: this.theUser
+          user: this.theUserFirstName
         })
         //set newpost to blank to reset input box
         this.setState({
@@ -173,7 +198,8 @@ class Comments extends Component {
 
                         <Tabs tabTextColor='black'>
                             <TabOne post = {this.state.postList} isPushed = {this.state.isPostPushed}
-                              postRef = {this.postRef} theUser = {this.theUser} tabLabel='The Yard'/>
+                              postRef = {this.postRef} theUser = {this.theUserFirstName}
+                              avatar = {this.state.avatarSource} tabLabel='The Yard'/>
 
                         </Tabs>
                     </View>

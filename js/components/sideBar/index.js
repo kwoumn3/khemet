@@ -16,7 +16,7 @@ class SideBar extends Component {
   }
 
   navigateTo(route) {
-    this.props.navigateTo(route, 'home');
+    this.props.navigateTo(route,'currentUser', 'home');
   }
 
   render() {
@@ -41,15 +41,6 @@ class SideBar extends Component {
               >
                 <Icon name="ios-keypad-outline" />
                 <Text style={styles.linkText}>SETTINGS</Text>
-              </ListItem>
-
-              <ListItem
-                button iconLeft
-                onPress={() => this.navigateTo('calendar')}
-                style={styles.links}
-              >
-                <Icon name="ios-keypad-outline" />
-                <Text style={styles.linkText}>CALENDAR</Text>
               </ListItem>
 
               <ListItem
@@ -88,7 +79,7 @@ class SideBar extends Component {
 
 function bindAction(dispatch) {
   return {
-    navigateTo: (route, homeRoute) => dispatch(navigateTo(route, homeRoute)),
+    navigateTo: (route, viewUser, homeRoute) => dispatch(navigateTo(route, viewUser, homeRoute)),
   };
 }
 

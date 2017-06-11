@@ -42,26 +42,28 @@ class HeaderContent extends Component {
       <View>
         <Grid style={styles.headerContainer} >
             <Col style={styles.headerBtns}>
-            <Button transparent onPress={() => this.replaceRoute('login')}>
+            <Button transparent style={styles.headerBtns} style={{marginTop:2}} onPress={() => this.replaceRoute('login')}>
                 <Icon1 name='sign-out' style={styles.headerIcons} />
             </Button>
             </Col>
 
             <Col style={styles.headerBtns}>
-                <Button transparent style={styles.headerIcons} >
+                <Button transparent style={styles.headerBtns} onPress={() => this.replaceRoute('userlist')}>
                   <Icon1 name="search" style={styles.headerIcons} />
                 </Button>
             </Col>
             <Col style={styles.headerBtns}>
                 <TouchableOpacity onPress={() => this.replaceRoute("comments")}>
-                    <Image style={{width: 50, height: 50, bottom: 10}} resizeMode={Image.resizeMode.contain} source={require('../../../images/logo3.png')} />
+                    <Image style={{width: 50, height: 50, bottom: 10}} source={require('../../../images/logo3.png')} />
                 </TouchableOpacity>
             </Col>
             <Col style={styles.headerBtns} >
-                
+                <Button transparent style={styles.headerBtns} >
+                  <Icon1 name="envelope" style={styles.headerIcons} />
+                </Button>
             </Col>
             <Col style={styles.headerBtns}>
-            <Button transparent style={styles.headerBtns} onPress={this.props.openDrawer} >
+            <Button transparent style={styles.headerBtns} style={{marginTop:3}} onPress={this.props.openDrawer} >
               <Icon name="ios-menu" />
             </Button>
             </Col>

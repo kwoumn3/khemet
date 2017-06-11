@@ -33,7 +33,8 @@ module.exports = StyleSheet.create({
   headerIcons : {
       fontSize: 30,
       color: '#FFFFFF',
-      paddingTop: (Platform.OS === 'android') ? 10 : undefined
+      paddingTop: (Platform.OS === 'android') ? 10 : undefined,
+      marginBottom:5,
   },
   headerTextIcon: {
       fontSize: 28,
@@ -46,7 +47,6 @@ module.exports = StyleSheet.create({
   imageHeader: {
     height: 25,
     width: 95,
-    resizeMode: 'contain',
     marginTop: 10,
   },
 });

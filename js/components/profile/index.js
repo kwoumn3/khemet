@@ -7,7 +7,7 @@ import { Image, View, TouchableOpacity, Platform } from 'react-native';
 import { actions } from 'react-native-navigation-redux-helpers';
 import { openDrawer } from '../../actions/drawer';
 import navigateTo from '../../actions/sideBarNav';
-import { Container, Header, Content, Text, Button, Icon, Thumbnail } from 'native-base';
+import { Container, Header, Content, Text, Button, Card, CardItem, List, ListItem, Left, Body, Right, Icon, Thumbnail } from 'native-base';
 import { Grid, Col, Row } from 'react-native-easy-grid';
 import HeaderContent from './../headerContent/';
 import Comments from '../comments/index.js';
@@ -31,7 +31,7 @@ const fs = RNFetchBlob.fs
 window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
 window.Blob = Blob
 
-const uploadImage = (uri, mime = 'application/octet-stream') => {
+const uploadImage = (uri, mime = 'image/jpg') => {
   return new Promise((resolve, reject) => {
     const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri
     const sessionId = new Date().getTime()
@@ -76,36 +76,64 @@ class Profile extends Component {
       super(props);
 
       this.state = {
-          avatarSource: null,
+          avatarSource: '',
           imgBase64: '',
           uploadURL: '',
+          viewingUserRef: ''
       }
 
       this.firebase = ApiRequest.getBase();
       this.firebaseRef = ApiRequest.getRef();
 
+      /*this.setState({
+        viewingUserRef: this.firebaseRef.child('users/'+this.firebase.auth().this.props.viewingUser
+      })*/
       //takes user uid reference from firebase
       this.userRef = this.firebaseRef.child('users/'+this.firebase.auth().currentUser.uid);
+      console.log("Show props "+ this.props.viewUser);
 
       // Get a reference to the storage service, which is used to create references in your storage bucket
       //this.imagesRef = this.firebase.storage().ref().child('profilePics');
 
+      //try getting profile pic
+      var storage = this.firebase.storage();
+      this.pathReference = storage.ref('profilePics/'+this.firebase.auth().currentUser.uid);
+      console.log("url path: " + 'profilePics/'+this.firebase.auth().currentUser.uid);
 
+      this.loadProfilePic();
+      this.picSource = '';
 
       //sets this.theUser to first name of current user
       this.userRef.on('value', (snap) => {
         this.theUserName = snap.val().firstname + " " + snap.val().lastname;
-        console.log(this.theUserName);
+        this.displayName = snap.val().displayName;
         this.org = snap.val().organization;
-        this.emailaddress = snap.val().emailaddress;
+        this.emailaddress = snap.val().email;
         this.filename = snap.val().filename;
+        this.crossYear = snap.val().crossYear;
+        this.chapter = snap.val().chapter;
+        this.location = snap.val().location;
+        this.occupation = snap.val().occupation;
+        this.school = snap.val().school;
+
       });
+
+      this.userRef.child('friends').on('value', (snap) => {
+        this.friendCount = snap.numChildren();
+      })
 
 
     }
 
 
-
+   async loadProfilePic() {
+      this.pathReference.getDownloadURL().then(url => {
+          console.log("what is url: "+ url);
+          this.setState({ avatarSource: url })
+      }).catch(function(error) {
+        console.log(error+":  No Profile Pic Exists");
+      });
+    }
 
 
     selectPhotoTapped() {
@@ -143,7 +171,8 @@ class Profile extends Component {
           } else {
             source = {uri: response.uri.replace('file://', ''), isStatic: true};
           }
-
+          this.picSource = source;
+          console.log("sourcesource: " + source);
           this.setState({
             avatarSource: source,
             imgBase64: temp,
@@ -193,7 +222,7 @@ class Profile extends Component {
                 // Unknown error occurred, inspect error.serverResponse
                 break;
             }
-          }, function() {
+          } , function() {
             // Upload completed successfully, now we can get the download URL
             var downloadURL = uploadTask.snapshot.downloadURL;
           });*/
@@ -225,10 +254,14 @@ class Profile extends Component {
       this.userRef = this.firebaseRef.child('users/'+this.firebase.auth().currentUser.uid);
 
       this.userRef.on('value', (snap) => {
-        this.theUserName = snap.val().firstname + " " + snap.val().lastname;
+        this.theUserName = snap.val().displayName;
         this.org = snap.val().organization;
         this.emailaddress = snap.val().emailaddress;
         this.filename = snap.val().filename;
+        this.crossYear = snap.val().crossYear;
+        this.chapter = snap.val().chapter;
+        this.location = snap.val().location;
+        this.school = snap.val().school;
       });
 
     }
@@ -246,6 +279,11 @@ class Profile extends Component {
     }
 
     render() {
+
+      //this.loadProfilePic();
+
+      console.log("whats the source: "+ this.state.avatarSource);
+
         return (
             <Container theme={theme}>
 
@@ -254,14 +292,15 @@ class Profile extends Component {
                 </Header>
 
                     <View style={styles.profileInfoContainer}>
+
                         <TouchableOpacity style={{alignSelf: 'center'}} onPress={this.selectPhotoTapped.bind(this)}>
-                          { this.state.avatarSource === null ? <Thumbnail source={require('../../../images/contacts/nopic.png')} style={styles.profilePic} /> :
-                            <Thumbnail source={this.state.avatarSource} style={styles.profilePic} />
+                          { this.state.avatarSource === '' ? <Thumbnail source={require('../../../images/contacts/nopic.png')} style={styles.profilePic} /> :
+                            <Thumbnail source={{uri: this.state.avatarSource}} style={styles.profilePic} />
                           }
                         </TouchableOpacity>
                         <View style={styles.profileInfo}>
                             <TouchableOpacity>
-                                <Text style={styles.profileUser}>{this.theUserName}</Text>
+                                <Text style={styles.profileUser}>{this.displayName}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity>
                                 <Text note  style={styles.profileUserInfo}>{this.org}</Text>
@@ -270,23 +309,24 @@ class Profile extends Component {
                     </View>
 
                     <View style={styles.linkTabs}>
+
                         <Grid>
                             <Col>
                                 <TouchableOpacity  style={styles.linkTabs_header}>
-                                    <Text style={styles.linkTabs_tabCounts}>13</Text>
-                                    <Text note style={styles.linkTabs_tabName}>Comments</Text>
+                                    <Text style={styles.linkTabs_tabCounts}>{this.friendCount}</Text>
+                                    <Text note style={styles.linkTabs_tabName}>Friends</Text>
                                 </TouchableOpacity>
                             </Col>
                             <Col>
                                 <TouchableOpacity  style={styles.linkTabs_header}>
-                                    <Text style={styles.linkTabs_tabCounts}>12</Text>
-                                    <Text note style={styles.linkTabs_tabName}>Channels</Text>
+                                    <Text style={styles.linkTabs_tabCounts}>0</Text>
+                                    <Text note style={styles.linkTabs_tabName}>Posts</Text>
                                 </TouchableOpacity>
                             </Col>
                             <Col>
                                 <TouchableOpacity  style={styles.linkTabs_header}>
-                                    <Text style={styles.linkTabs_tabCounts}>52</Text>
-                                    <Text note style={styles.linkTabs_tabName}>Bookmarks</Text>
+                                    <Text style={styles.linkTabs_tabCounts}>0</Text>
+                                    <Text note style={styles.linkTabs_tabName}>Events</Text>
                                 </TouchableOpacity>
                             </Col>
                         </Grid>
@@ -294,8 +334,45 @@ class Profile extends Component {
 
                     <Content style={{marginBottom:(Platform.OS === 'ios') ? -50 : -10}}>
                         <View style={{backgroundColor: '#fff'}}>
+
+                        <Card>
+                            <CardItem style={styles.cardItem}>
+                                <Text style={styles.detailTitle} >School</Text>
+                                <Text note style={styles.detailInfo}>{this.school}</Text>
+                            </CardItem>
+                        </Card>
+
+                        <Card>
+                            <CardItem style={styles.cardItem}>
+                                <Text style={styles.detailTitle} >Email</Text>
+                                <Text note style={styles.detailInfo}>{this.emailaddress}</Text>
+                            </CardItem>
+                        </Card>
+
+                        <Card>
+                            <CardItem style={styles.cardItem}>
+                                <Text style={styles.detailTitle} >Chapter Cross & Crossing Year/Semester</Text>
+                                <Text note style={styles.detailInfo}>{this.chapter + " " + this.crossYear}</Text>
+                            </CardItem>
+                        </Card>
+
+                        <Card>
+                            <CardItem style={styles.cardItem}>
+                                <Text style={styles.detailTitle} >Location</Text>
+                                <Text note style={styles.detailInfo}>{this.location}</Text>
+                            </CardItem>
+                        </Card>
+
+                        <Card>
+                            <CardItem style={styles.cardItem}>
+                                <Text style={styles.detailTitle} >Occupation</Text>
+                                <Text note style={styles.detailInfo}>{this.occupation}</Text>
+
+                            </CardItem>
+                        </Card>
+
                             <TouchableOpacity style={{flexDirection: 'row'}} onPress={() => this.navigateTo('home')}>
-                                <Image source={require('../../../images/NewsIcons/1.jpg')} style={styles.newsImage} />
+
                                 <View style={styles.newsContent}>
                                     <Text numberOfLines={2} style={styles.newsHeader}>
                                         Lorem Ipsum is simply dummy text of the printing
